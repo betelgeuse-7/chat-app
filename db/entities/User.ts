@@ -5,11 +5,13 @@ import {
     BaseEntity,
     CreateDateColumn,
     OneToMany,
+    ManyToMany,
+    JoinTable,
 } from "typeorm"
 import { Room } from "./Room"
 import { Message } from "./Message"
 
-@Entity()
+@Entity("users")
 export class User extends BaseEntity {
     @PrimaryGeneratedColumn()
     userId: number
@@ -28,16 +30,19 @@ export class User extends BaseEntity {
     })
     email: string
 
-    @Column()
+    @Column({
+        type: "text",
+    })
     password: string
 
-    @CreateDateColumn("timestamptz")
+    @CreateDateColumn()
     registeredAt: Date
 
     @OneToMany(() => Room, room => room.createdBy)
     roomsCreated: Room[]
 
-    @OneToMany(() => Room, room => room.joinedBy)
+    @ManyToMany(() => Room)
+    @JoinTable()
     roomsJoined: Room[]
 
     @OneToMany(() => Message, message => message.author)

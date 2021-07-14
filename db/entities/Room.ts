@@ -5,10 +5,12 @@ import {
     BaseEntity,
     CreateDateColumn,
     ManyToOne,
+    OneToMany,
 } from "typeorm"
 import { User } from "./User"
+import { Message } from "./Message"
 
-@Entity()
+@Entity("rooms")
 export class Room extends BaseEntity {
     @PrimaryGeneratedColumn()
     roomId: number
@@ -36,9 +38,9 @@ export class Room extends BaseEntity {
     @ManyToOne(() => User, user => user.roomsCreated)
     createdBy: User
 
-    @ManyToOne(() => User, user => user.roomsJoined)
-    joinedBy: User
-
-    @CreateDateColumn("timestamptz")
+    @CreateDateColumn()
     createdAt: Date
+
+    @OneToMany(() => Message, message => message.room)
+    messages: Message[]
 }

@@ -12,7 +12,7 @@ import { Room } from "./Room"
 
 import { User } from "./User"
 
-@Entity()
+@Entity("messages")
 export class Message extends BaseEntity {
     @PrimaryGeneratedColumn()
     messageId: number
@@ -22,13 +22,12 @@ export class Message extends BaseEntity {
     })
     message: string
 
-    @CreateDateColumn("timestamptz")
+    @CreateDateColumn()
     date: Date
 
     @ManyToOne(() => User, user => user.messages)
     author: User
 
-    @OneToOne(() => Room)
-    @JoinColumn()
+    @ManyToOne(() => Room, room => room.messages)
     room: Room
 }

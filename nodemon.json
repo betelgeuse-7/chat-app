@@ -1,5 +1,5 @@
 {
-    "watch": ["server.ts"],
+    "watch": ["db/**/*.ts, *.ts"],
     "ext": "ts",
     "exec": "tsc && node dist/server.js"
 }

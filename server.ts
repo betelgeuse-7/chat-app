@@ -15,6 +15,10 @@ const wss = new WebSocket.Server({
 
 import { WSMessage } from "./Message"
 import { WSClient } from "./Client"
+import { closeDatabaseConnection, createDatabaseConnection } from "./db"
+
+const databaseConnection = createDatabaseConnection()
+console.log(databaseConnection.then(val => console.log(val)))
 
 const PUBLIC = path.join(__dirname, "../public")
 
@@ -48,3 +52,5 @@ const broadcastMessage = (clients: WSClient[], message: WSMessage) => {
 app.listen(() => {
     console.log(`app is listening to port ${PORT}`)
 })
+
+closeDatabaseConnection(databaseConnection)
