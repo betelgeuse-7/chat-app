@@ -1,7 +1,9 @@
 import express from "express"
 const WebSocket = require("ws")
-import ws from "ws"
-import path from "path"
+import { createConnection } from "typeorm"
+
+import { setUpApp } from "./setup"
+import { setUpWss } from "./wss/setup"
 
 const PORT = process.env.PORT || 3000
 
@@ -13,44 +15,10 @@ const wss = new WebSocket.Server({
     path: "/chat",
 })
 
-import { WSMessage } from "./Message"
-import { WSClient } from "./Client"
-import { closeDatabaseConnection, createDatabaseConnection } from "./db"
-
-const databaseConnection = createDatabaseConnection()
-console.log(databaseConnection.then(val => console.log(val)))
-
-const PUBLIC = path.join(__dirname, "../public")
-
-let CLIENTS: WSClient[] = []
-
-app.use("/static", express.static(PUBLIC))
-
-app.get("/", (req, res) => {
-    res.send("Hello world")
-})
-
-app.get("/chat", (req, res) => {
-    res.sendFile(path.join(PUBLIC, "chat.html"))
-})
-
-wss.on("connection", (w: ws) => {
-    console.log("connected")
-    CLIENTS.push({ clientId: Math.random(), socket: w })
-    w.on("message", (msg: WSMessage) => {
-        console.log("received: ", msg)
-        broadcastMessage(CLIENTS, msg)
-    })
-})
-
-const broadcastMessage = (clients: WSClient[], message: WSMessage) => {
-    clients.forEach((c: WSClient) => {
-        c.socket.send(message)
-    })
+const Main = async () => {
+    const dbConn = await createConnection()
+    setUpWss(wss)
+    setUpApp(app)
 }
 
-app.listen(() => {
-    console.log(`app is listening to port ${PORT}`)
-})
-
-closeDatabaseConnection(databaseConnection)
+Main()

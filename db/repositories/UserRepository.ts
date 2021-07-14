@@ -1,9 +1,5 @@
 import { Repository } from "typeorm"
 import { User } from "../entities/User"
+import { getConnection } from "typeorm"
 
-export class UserRepository extends Repository<User> {
-    // test
-    getFirstUser() {
-        return this.createQueryBuilder("user").getOne()
-    }
-}
+export class UserRepository extends Repository<User> {}
