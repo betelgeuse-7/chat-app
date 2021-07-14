@@ -1,5 +1,5 @@
-import { WSMessage } from "../Message"
-import { WSClient } from "../Client"
+import { WSMessage } from "../types/Message"
+import { WSClient } from "../types/Client"
 
 export const broadcastMessage = (clients: WSClient[], message: WSMessage) => {
     clients.forEach((c: WSClient) => {

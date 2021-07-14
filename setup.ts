@@ -29,7 +29,6 @@ export const setUpApp = (app: express.Express) => {
     app.post("/register", async (req, res) => {
         const result = checkRegisterFormData({ ...req.body }).errorMsg
         if (result === "") {
-            let error: string = ""
             const dbConn = getConnection()
             const userRep = dbConn.getRepository(User)
             const user = new User()
