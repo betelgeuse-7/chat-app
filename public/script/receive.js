@@ -9,9 +9,10 @@ import {
 const messagesDiv = document.getElementById("Messages")
 
 export const newMessage = message => {
-    const messageContent = MESSAGE_CONTENT_NODE(message)
+    message = JSON.parse(message)
+    const messageContent = MESSAGE_CONTENT_NODE(message.value)
     const messageMeta = MESSAGE_META_NODE(
-        MESSAGE_BY("Some user"),
+        MESSAGE_BY(message.username),
         MESSAGE_DATE("12.07.2019 20:53")
     )
 

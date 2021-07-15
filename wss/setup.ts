@@ -9,8 +9,13 @@ export const setUpWss = (wss: ws) => {
     wss.on("connection", (w: ws) => {
         console.log("connected")
         CLIENTS.push({ clientId: Math.random(), socket: w })
-        w.on("message", (msg: WSMessage) => {
-            console.log("received: ", msg)
+        w.on("message", (msg: string) => {
+            const message: WSMessage = {
+                value: JSON.parse(msg).value,
+                username: JSON.parse(msg).username,
+            }
+            console.log(message)
+
             broadcastMessage(CLIENTS, msg)
         })
     })

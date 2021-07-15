@@ -6,9 +6,14 @@ import { ERROR } from "./constants.js"
 import { webSocket } from "./ws.js"
 
 const sendMessage = () => {
-    const message = messageInput.value
+    const message = {
+        value: messageInput.value,
+        username: document.cookie.split("USERNAME=")[1],
+    }
+    console.log("CLIENT MESSAGE: ", message)
+
     if (checkMessage(message)) {
-        webSocket.send(message)
+        webSocket.send(JSON.stringify(message))
         // remove old error message
         if (document.querySelector(".MessageError")) {
             inputDiv.removeChild(document.querySelector(".MessageError"))
@@ -19,7 +24,7 @@ const sendMessage = () => {
 }
 
 const checkMessage = msg => {
-    if (msg.trim().length === 0) return false
+    if (msg.value.trim().length === 0) return false
     return true
 }
 

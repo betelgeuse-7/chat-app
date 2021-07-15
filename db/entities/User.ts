@@ -17,6 +17,12 @@ export class User extends BaseEntity {
     userId: number
 
     @Column({
+        type: "text",
+        nullable: true,
+    })
+    sessionId: string
+
+    @Column({
         type: "varchar",
         length: 155,
         unique: true,

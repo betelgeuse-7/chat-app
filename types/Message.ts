@@ -1,3 +1,4 @@
 export type WSMessage = {
-    message: string
+    value: string
+    username: string
 }

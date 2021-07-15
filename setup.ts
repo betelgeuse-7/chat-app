@@ -1,52 +1,42 @@
 import express from "express"
 import path from "path"
-import { getConnection, QueryFailedError } from "typeorm"
-import { checkRegisterFormData } from "./utils/check"
-import { User } from "./db/entities/User"
-import bcrypt from "bcrypt"
+import cookieParser from "cookie-parser"
 
 const PUBLIC = path.join(__dirname, "../public")
 const PORT = process.env.PORT || 3000
-import typeorm from "typeorm"
-import { giveDuplicateError } from "./utils/duplicateError"
+import { authenticationMiddleware } from "./middleware/authenticated"
+import { logoutHandler } from "./handlers/logout.handler"
+import { loginHandler } from "./handlers/login.handler"
+import { registerHandler } from "./handlers/register.handler"
 
 export const setUpApp = (app: express.Express) => {
     app.use("/static", express.static(PUBLIC))
     app.use(express.urlencoded({ extended: true }))
+    app.use(cookieParser())
 
     app.get("/", (req, res) => {
         res.send("Hello world")
     })
-
     app.get("/chat", (req, res) => {
-        res.sendFile(path.join(PUBLIC, "chat.html"))
+        authenticationMiddleware(req, res, ({ username }) => {
+            res.cookie("USERNAME", username, {
+                httpOnly: false,
+                maxAge: 90000000,
+            })
+            res.sendFile(path.join(PUBLIC, "chat.html"))
+        })
     })
-
-    app.get("/register", (req, res) => {
+    app.get("/register", (req, res) =>
         res.sendFile(path.join(PUBLIC, "register.html"))
-    })
+    )
+    app.post("/register", async (req, res) => registerHandler(req, res))
 
-    app.post("/register", async (req, res) => {
-        const result = checkRegisterFormData({ ...req.body }).errorMsg
-        if (result === "") {
-            const dbConn = getConnection()
-            const userRep = dbConn.getRepository(User)
-            const user = new User()
-            user.email = req.body.email
-            user.username = req.body.username
-            // set password
-            user.password = bcrypt.hashSync(req.body.password, 10)
+    app.get("/login", (req, res) =>
+        res.sendFile(path.join(PUBLIC, "login.html"))
+    )
+    app.post("/login", (req, res) => loginHandler(req, res))
 
-            try {
-                await userRep.insert(user)
-                res.redirect("/chat")
-            } catch (e) {
-                res.end(giveDuplicateError(e.parameters, e.constraint))
-            }
-        } else {
-            res.send(result)
-        }
-    })
+    app.get("/logout", (req, res) => logoutHandler(req, res))
 
     app.listen(() => {
         console.log(`app is listening to port ${PORT}`)
