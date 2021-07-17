@@ -1,0 +1,113 @@
+:root {
+    --border-radius: 5px;
+}
+
+#MainWrapper {
+    background-color: #fed8ff;
+    height: auto;
+    padding: 10px;
+    color: #fff;
+    border-radius: var(--border-radius);
+    position: absolute;
+    left: 15%;
+    right: 15%;
+    top: 5%;
+    display: flex;
+    justify-content: space-between;
+}
+
+#Left,
+#Right {
+    height: auto;
+    padding: 5px;
+    border-radius: var(--border-radius);
+}
+
+#Left {
+    background-color: #a00866;
+}
+
+#Right {
+    background-color: inherit;
+    width: 100%;
+    margin-left: 10px;
+}
+
+.Message {
+    padding: 3px;
+    padding-bottom: 6px;
+    padding-top: 6px;
+    background-color: #4141eb;
+    border: 3px;
+    font-size: 14px;
+    margin-bottom: 2px;
+    width: auto;
+    height: auto;
+    border-radius: var(--border-radius);
+}
+
+#MessageInput__Wrapper,
+.RoomName {
+    background-color: #f6c7f7;
+    padding: 5px;
+    border-radius: var(--border-radius);
+}
+
+.RoomName {
+    font-size: 18px;
+    font-weight: 800;
+    color: #000;
+    align-self: center;
+    margin-bottom: 4px;
+}
+
+#message-input {
+    min-width: 85%;
+    width: auto;
+    border: none;
+    font-size: 16px;
+    padding: 10px;
+    border-radius: var(--border-radius);
+}
+
+#send-btn {
+    min-width: 6%;
+    width: 10%;
+    background-color: #ff7d41;
+    padding: 10px;
+    border-radius: var(--border-radius);
+    border: none;
+    border-bottom: 2px solid #ee530b;
+    float: right;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+#send-btn:hover {
+    background-color: #ff6620;
+}
+
+#send-btn:active {
+    border: none;
+}
+
+#ProfileInfo__Wrapper {
+    margin-bottom: 20px;
+}
+
+#Rooms__Wrapper {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.Room {
+    margin: 5px;
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: 700;
+    background-color: #fca0d9;
+    border-radius: var(--border-radius);
+    text-align: center;
+    cursor: pointer;
+    max-width: 200px;
+}

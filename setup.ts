@@ -15,7 +15,7 @@ export const setUpApp = (app: express.Express) => {
     app.use(cookieParser())
 
     app.get("/", (req, res) => {
-        res.send("Hello world")
+        res.sendFile(path.join(PUBLIC, "index.html"))
     })
     app.get("/chat", (req, res) => {
         authenticationMiddleware(req, res, ({ username }) => {
