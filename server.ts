@@ -12,7 +12,7 @@ const server = app.listen(PORT)
 const wss = new WebSocket.Server({
     server,
     host: "localhost",
-    path: "/chat",
+    path: "/room",
 })
 
 const Main = async () => {

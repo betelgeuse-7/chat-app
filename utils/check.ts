@@ -1,7 +1,6 @@
 import { Form } from "../types/Form"
 import { Error } from "../types/Error"
 
-// Check form data
 export const checkFormData = (f: Form, login: boolean = false): Error => {
     let errorMsg: Error = { errorMsg: "" }
 

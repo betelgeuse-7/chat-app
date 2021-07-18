@@ -12,8 +12,10 @@ export const loginHandler = (req: express.Request, res: express.Response) => {
             password: req.body.password,
         }
 
-        if (checkFormData(givenCreds, true).errorMsg !== "") {
-            res.status(400).end(checkFormData(givenCreds, true).errorMsg)
+        const formDataError = checkFormData(givenCreds, true)
+
+        if (formDataError.errorMsg !== "") {
+            res.status(400).end(formDataError.errorMsg)
             return
         }
 
@@ -24,8 +26,10 @@ export const loginHandler = (req: express.Request, res: express.Response) => {
         userRep.findOne({ email: givenCreds.email }).then(user => {
             if (user) {
                 // check the password is correct
-                if (!bcrypt.compareSync(givenCreds.password, user!.password))
+                if (!bcrypt.compareSync(givenCreds.password, user!.password)) {
                     res.status(400).end("wrong password")
+                    return
+                }
 
                 userRep.save({
                     userId: user?.userId,
@@ -37,11 +41,10 @@ export const loginHandler = (req: express.Request, res: express.Response) => {
                     maxAge: 90000000,
                 })
 
-                res.redirect("/")
-
-                return
+                return res.redirect("/")
             } else {
                 res.status(400).end("login failed")
+                return
             }
         })
     }

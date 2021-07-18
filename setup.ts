@@ -1,13 +1,13 @@
 import express from "express"
 import path from "path"
 import cookieParser from "cookie-parser"
-
-const PUBLIC = path.join(__dirname, "../public")
-const PORT = process.env.PORT || 3000
-import { authenticationMiddleware } from "./middleware/authenticated"
+import { isAuthenticated } from "./utils/isAuthenticated"
 import { logoutHandler } from "./handlers/logout.handler"
 import { loginHandler } from "./handlers/login.handler"
 import { registerHandler } from "./handlers/register.handler"
+
+const PUBLIC = path.join(__dirname, "../public")
+const PORT = process.env.PORT || 3000
 
 export const setUpApp = (app: express.Express) => {
     app.use("/static", express.static(PUBLIC))
@@ -15,16 +15,9 @@ export const setUpApp = (app: express.Express) => {
     app.use(cookieParser())
 
     app.get("/", (req, res) => {
-        res.sendFile(path.join(PUBLIC, "index.html"))
-    })
-    app.get("/chat", (req, res) => {
-        authenticationMiddleware(req, res, ({ username }) => {
-            res.cookie("USERNAME", username, {
-                httpOnly: false,
-                maxAge: 90000000,
-            })
-            res.sendFile(path.join(PUBLIC, "chat.html"))
-        })
+        if (isAuthenticated(req, res))
+            return res.sendFile(path.join(PUBLIC, "index.html"))
+        return res.redirect("/login")
     })
     app.get("/register", (req, res) =>
         res.sendFile(path.join(PUBLIC, "register.html"))

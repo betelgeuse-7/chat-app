@@ -1,8 +1,7 @@
-import { WSMessage } from "../types/Message"
-import { WSClient } from "../types/Client"
+import ws from "ws"
 
-export const broadcastMessage = (clients: WSClient[], message: string) => {
-    clients.forEach((c: WSClient) => {
-        c.socket.send(message)
+export const broadcastMessage = (clients: Set<ws>, message: string) => {
+    clients.forEach((c: ws) => {
+        c.send(message)
     })
 }
