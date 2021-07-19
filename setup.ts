@@ -1,7 +1,7 @@
 import express from "express"
 import path from "path"
 import cookieParser from "cookie-parser"
-import { isAuthenticated } from "./utils/isAuthenticated"
+import { auth } from "./middleware/auth"
 import { logoutHandler } from "./handlers/logout.handler"
 import { loginHandler } from "./handlers/login.handler"
 import { registerHandler } from "./handlers/register.handler"
@@ -14,10 +14,8 @@ export const setUpApp = (app: express.Express) => {
     app.use(express.urlencoded({ extended: true }))
     app.use(cookieParser())
 
-    app.get("/", (req, res) => {
-        if (isAuthenticated(req, res))
-            return res.sendFile(path.join(PUBLIC, "index.html"))
-        return res.redirect("/login")
+    app.get("/", auth, (req, res) => {
+        return res.sendFile(path.join(PUBLIC, "index.html"))
     })
     app.get("/register", (req, res) =>
         res.sendFile(path.join(PUBLIC, "register.html"))
@@ -29,7 +27,7 @@ export const setUpApp = (app: express.Express) => {
     )
     app.post("/login", (req, res) => loginHandler(req, res))
 
-    app.get("/logout", (req, res) => logoutHandler(req, res))
+    app.get("/logout", auth, (req, res) => logoutHandler(req, res))
 
     app.listen(() => {
         console.log(`app is listening to port ${PORT}`)
