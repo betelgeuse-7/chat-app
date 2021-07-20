@@ -9,7 +9,10 @@ import {
 const messagesDiv = document.getElementById("Messages")
 
 export const newMessage = message => {
+    console.log(message)
+    /*
     message = JSON.parse(message)
+    
     const messageContent = MESSAGE_CONTENT_NODE(message.value)
     const messageMeta = MESSAGE_META_NODE(
         MESSAGE_BY(message.username),
@@ -19,4 +22,5 @@ export const newMessage = message => {
     const messageToAppend = MESSAGE(messageContent, messageMeta)
 
     messagesDiv.appendChild(messageToAppend)
+*/
 }

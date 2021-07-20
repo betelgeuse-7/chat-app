@@ -73,18 +73,19 @@
 #send-btn {
     min-width: 6%;
     width: 10%;
-    background-color: #ff7d41;
+    background-color: #50c577;
     padding: 10px;
     border-radius: var(--border-radius);
     border: none;
-    border-bottom: 2px solid #ee530b;
+    border-bottom: 2px solid #4d9759;
     float: right;
     font-size: 16px;
     font-weight: 700;
+    color: #fff;
 }
 
 #send-btn:hover {
-    background-color: #ff6620;
+    background-color: #21ac6be0;
 }
 
 #send-btn:active {
