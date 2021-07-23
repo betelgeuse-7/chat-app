@@ -15,7 +15,7 @@ export const setUpApp = (app: express.Express) => {
     app.use(cookieParser())
 
     app.get("/", auth, (req, res) => {
-        return res.sendFile(path.join(PUBLIC, "index.html"))
+        res.sendFile(path.join(PUBLIC, "index.html"))
     })
     app.get("/register", (req, res) =>
         res.sendFile(path.join(PUBLIC, "register.html"))

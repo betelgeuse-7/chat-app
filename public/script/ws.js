@@ -1,14 +1,16 @@
-import { newMessage } from "./receive.js"
+import { newMessage, renderMessages } from "./receive.js"
 import { sendMessage } from "./send.js"
 
 const rooms = document.querySelectorAll(".Room")
 const sendBtn = document.getElementById("send-btn")
 
 let URL = "ws://localhost:3000/room"
+let currentRoom = undefined
 
 for (const room of rooms) {
     room.addEventListener("click", e => {
-        let roomUrl = URL + `?rid=${e.target.dataset.rid}`
+        currentRoom = e.target.dataset.rid
+        const roomUrl = URL + `?rid=${e.target.dataset.rid}`
 
         const webSocket = new WebSocket(roomUrl)
 
@@ -17,7 +19,8 @@ for (const room of rooms) {
         }
 
         webSocket.onmessage = e => {
-            newMessage(e.data)
+            newMessage(JSON.parse(e.data))
+            renderMessages(currentRoom)
         }
 
         sendBtn.addEventListener("click", () => {

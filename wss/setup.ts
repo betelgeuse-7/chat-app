@@ -1,9 +1,12 @@
 import http from "http"
+import { getConnection } from "typeorm"
 import ws from "ws"
+import { User } from "../db/entities/User"
 import { Client } from "../types/Client"
+import { WSResponse } from "../types/Response"
 import { sendMessageToRoom } from "./sendToRoom"
 
-let CLIENTS: Array<Client> = []
+export let CLIENTS: Array<Client> = []
 
 export const setUpWss = (wss: ws) => {
     wss.on("connection", (w: ws, req: http.IncomingMessage) => {
@@ -18,17 +21,25 @@ export const setUpWss = (wss: ws) => {
         CLIENTS.push(CLIENT)
 
         w.on("message", (msg: string) => {
-            const message = {
-                roomId: ROOM_ID,
-                userSessionId: USER_SESSION_ID,
-                message: msg,
-            }
+            getConnection()
+                .getRepository(User)
+                .findOne({ sessionId: USER_SESSION_ID })
+                .then(u => {
+                    const username = u?.username
+                    const date = new Date()
 
-            console.log(message)
-            sendMessageToRoom(
-                CLIENTS.filter(c => c.roomId === message.roomId),
-                message
-            )
+                    if (username) {
+                        const response: WSResponse = {
+                            username,
+                            date: `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`,
+                            roomId: ROOM_ID,
+                            message: msg,
+                        }
+
+                        console.log(response)
+                        sendMessageToRoom(ROOM_ID, response)
+                    }
+                })
         })
     })
 }

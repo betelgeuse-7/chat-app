@@ -1,11 +1,8 @@
-import { Message } from "../types/Message"
-import { Client } from "../types/Client"
+import { WSResponse } from "../types/Response"
+import { CLIENTS } from "./setup"
 
-export const sendMessageToRoom = (
-    clientsInRoom: Client[],
-    message: Message
-) => {
-    clientsInRoom.forEach(client => {
-        client.socket.send(JSON.stringify(message))
-    })
+export const sendMessageToRoom = (roomId: number, message: WSResponse) => {
+    CLIENTS.filter(c => c.roomId === roomId).forEach(c =>
+        c.socket.send(JSON.stringify(message))
+    )
 }

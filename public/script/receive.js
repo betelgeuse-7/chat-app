@@ -1,26 +1,36 @@
 import {
     MESSAGE,
     MESSAGE_CONTENT_NODE,
-    MESSAGE_META_NODE,
     MESSAGE_BY,
     MESSAGE_DATE,
 } from "./constants.js"
 
-const messagesDiv = document.getElementById("Messages")
+const messagesWrapper = document.getElementById("Messages__Wrapper")
+let messages = []
 
 export const newMessage = message => {
     console.log(message)
     /*
-    message = JSON.parse(message)
-    
-    const messageContent = MESSAGE_CONTENT_NODE(message.value)
-    const messageMeta = MESSAGE_META_NODE(
-        MESSAGE_BY(message.username),
-        MESSAGE_DATE("12.07.2019 20:53")
+    const messageContent = MESSAGE_CONTENT_NODE(
+        // get rid of the ""s escaped by JSON.stringify on the server side
+        message.message.substring(1, message.message.length - 1)
     )
+    const messageBy = MESSAGE_BY(message.username)
+    const messageDate = MESSAGE_DATE(message.date)
+    const messageToAppend = MESSAGE(messageContent, messageBy, messageDate)
 
-    const messageToAppend = MESSAGE(messageContent, messageMeta)
+    messageToAppend.dataset.rid = message.roomId
+  */
+    messages.push(message)
+}
 
-    messagesDiv.appendChild(messageToAppend)
-*/
+export const renderMessages = currentRoom => {
+    console.log(
+        "messages in room: " + currentRoom + ": ",
+        messages.filter(m => m.roomId === currentRoom)
+    )
+    /*
+    for (const message of messages) {
+        newMessage(message)
+    }*/
 }

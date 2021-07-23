@@ -5,10 +5,9 @@ const MESSAGE_TAG = "div"
 const CLASSNAMES = {
     errorClassname: "MessageError",
     messageClassname: "Message",
-    messageContentClassname: "Message__Content",
-    messageByClassname: "Message__By",
-    messageDateClassname: "Message__Date",
-    messageMetaClassname: "Message__Meta",
+    messageContentClassname: "message-content",
+    messageByClassname: "message-by",
+    messageDateClassname: "message-date",
 }
 
 export const ERROR = errorMessage => {
@@ -19,10 +18,11 @@ export const ERROR = errorMessage => {
     return error
 }
 
-export const MESSAGE = (messageContentNode, messageMetaNode) => {
+export const MESSAGE = (messageContentNode, messageByNode, messageDateNode) => {
     const messageNode = document.createElement(MESSAGE_TAG)
     messageNode.appendChild(messageContentNode)
-    messageNode.appendChild(messageMetaNode)
+    messageNode.appendChild(messageByNode)
+    messageNode.appendChild(messageDateNode)
     messageNode.className = CLASSNAMES.messageClassname
 
     return messageNode
@@ -34,15 +34,6 @@ export const MESSAGE_CONTENT_NODE = text => {
     messageContentNode.innerText = text
 
     return messageContentNode
-}
-
-export const MESSAGE_META_NODE = (messageByNode, messageDateNode) => {
-    const messageMetaNode = document.createElement(MESSAGE_TAG)
-    messageMetaNode.className = CLASSNAMES.messageMetaClassname
-    messageMetaNode.appendChild(messageByNode)
-    messageMetaNode.appendChild(messageDateNode)
-
-    return messageMetaNode
 }
 
 export const MESSAGE_BY = text => MESSAGE_META_SUB(text, false)
