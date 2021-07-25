@@ -11,26 +11,6 @@
     left: 15%;
     right: 15%;
     top: 5%;
-    display: flex;
-    justify-content: space-between;
-}
-
-#Left,
-#Right {
-    height: auto;
-    padding: 5px;
-    border-radius: var(--border-radius);
-}
-
-#Left {
-    background-color: #a00866;
-}
-
-#Right {
-    background-color: inherit;
-    width: 100%;
-    margin-left: 10px;
-    overflow: hidden;
 }
 
 .Message {
@@ -46,19 +26,10 @@
     border-radius: var(--border-radius);
 }
 
-#MessageInput__Wrapper,
-.RoomName {
+#MessageInput__Wrapper {
     background-color: #f6c7f7;
     padding: 5px;
     border-radius: var(--border-radius);
-}
-
-.RoomName {
-    font-size: 18px;
-    font-weight: 800;
-    color: #000;
-    align-self: center;
-    margin-bottom: 4px;
 }
 
 #message-input {
@@ -90,27 +61,6 @@
 
 #send-btn:active {
     border: none;
-}
-
-#ProfileInfo__Wrapper {
-    margin-bottom: 20px;
-}
-
-#Rooms__Wrapper {
-    margin-left: 5px;
-    margin-right: 5px;
-}
-
-.Room {
-    margin: 5px;
-    margin-bottom: 10px;
-    font-size: 18px;
-    font-weight: 700;
-    background-color: #fca0d9;
-    border-radius: var(--border-radius);
-    text-align: center;
-    cursor: pointer;
-    max-width: 200px;
 }
 
 #Messages__Wrapper {

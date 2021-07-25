@@ -17,6 +17,10 @@ export const setUpApp = (app: express.Express) => {
     app.get("/", auth, (req, res) => {
         res.sendFile(path.join(PUBLIC, "index.html"))
     })
+    app.get("/room", auth, (req, res) => {
+        res.sendFile(path.join(PUBLIC, "room.html"))
+    })
+
     app.get("/register", (req, res) =>
         res.sendFile(path.join(PUBLIC, "register.html"))
     )

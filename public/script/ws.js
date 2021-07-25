@@ -1,33 +1,21 @@
-import { newMessage, renderMessages } from "./receive.js"
+import { newMessage } from "./receive.js"
 import { sendMessage } from "./send.js"
 
-const rooms = document.querySelectorAll(".Room")
 const sendBtn = document.getElementById("send-btn")
+const messageInput = document.getElementById("message-input")
 
-let URL = "ws://localhost:3000/room"
-let currentRoom = undefined
+let URL = location.href.replace("http://", "ws://")
 
-for (const room of rooms) {
-    room.addEventListener("click", e => {
-        currentRoom = e.target.dataset.rid
-        const roomUrl = URL + `?rid=${e.target.dataset.rid}`
+const webSocket = new WebSocket(URL)
 
-        const webSocket = new WebSocket(roomUrl)
-
-        webSocket.onopen = e => {
-            console.log("Connected to the websocket server")
-        }
-
-        webSocket.onmessage = e => {
-            newMessage(JSON.parse(e.data))
-            renderMessages(currentRoom)
-        }
-
-        sendBtn.addEventListener("click", () => {
-            sendMessage(
-                webSocket,
-                document.getElementById("message-input").value
-            )
-        })
-    })
+webSocket.onopen = e => {
+    console.log("Connected to the websocket server")
 }
+
+webSocket.onmessage = e => {
+    newMessage(JSON.parse(e.data))
+}
+
+sendBtn.addEventListener("click", () =>
+    sendMessage(webSocket, messageInput.value)
+)

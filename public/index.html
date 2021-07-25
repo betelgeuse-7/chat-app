@@ -4,46 +4,34 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-       <link rel="stylesheet" href="/static/styles/reset.css">
-       <link rel="stylesheet" href="/static/styles/index.css">
+        <link rel="stylesheet" href="/static/styles/reset.css" />
+        <link rel="stylesheet" href="/static/styles/index.css" />
         <script defer type="module" src="/static/script/ws.js"></script>
+        <script defer type="module" src="/static/script/receive.js"></script>
         <script defer type="module" src="/static/script/send.js"></script>
-        <script defer type="module" src="/static/script/app.js"></script>
         <title>Index</title>
     </head>
     <body>
+        <ul id="online-users">
+            Online users:
+        </ul>
         <div id="MainWrapper">
-            <div id="Left">
-                <div id="ProfileInfo__Wrapper">
-                    <div id="username">baskabirsey</div>
-                    <div id="email">baska@birsey.com</div>
-                </div>
-                <div id="Rooms__Wrapper">
-                    <div class="Room" data-rid="1">Room 1</div>
-                    <div class="Room" data-rid="2">Room 2</div>
-                    <div class="Room" data-rid="3">Room 3</div>
-                    <div class="Room" data-rid="4">Room 4</div>
-                    <div class="Room" data-rid="5">Room 5</div>
-                    <div class="Room" data-rid="6">Room 6</div>
-                    <div class="Room" data-rid="7">Room 7</div>
-                    <div class="Room" data-rid="8">Room 8</div>
-                </div>
-            </div>
-            <div id="Right">
-                <div>
-                    <h3 class="RoomName">Room 1</h3>
-                    <ul id="Messages__Wrapper">
+            <ul id="Messages__Wrapper">
+                <!--
                         <li class="Message">
                             <span class="message-by">someone</span>
                             <span class="message-content">message 1</span>
                             <span class="message-date">02.03.2020 15:53</span>
                         </li>
-                    </div>
-                    <div id="MessageInput__Wrapper">
-                        <input type="text" placeholder="right here 🖋 (pun intended) " id="message-input">
-                        <button type="submit" id="send-btn">Send</button>
-                    </div>
-                </div>
+                -->
+            </ul>
+            <div id="MessageInput__Wrapper">
+                <input
+                    type="text"
+                    placeholder="right here 🖋 (pun intended) "
+                    id="message-input"
+                />
+                <button type="submit" id="send-btn">Send</button>
             </div>
         </div>
     </body>

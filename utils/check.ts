@@ -1,8 +1,10 @@
 import { Form } from "../types/Form"
-import { Error } from "../types/Error"
 
-export const checkFormData = (f: Form, login: boolean = false): Error => {
-    let errorMsg: Error = { errorMsg: "" }
+export const checkFormData = (
+    f: Form,
+    login: boolean = false
+): { errorMsg: string } => {
+    let errorMsg = { errorMsg: "" }
 
     if (f.email.trim().length === 0 || !f.email.includes("@")) {
         errorMsg.errorMsg = "invalid email"
