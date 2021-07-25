@@ -1,0 +1,9 @@
+This app was initially designed to have rooms, but security and ui turned out to be way more complex than I thought it would be. As a result of that, I gave up. The app now only has one room. 
+This project has some -potentially spaghetti- bad code. I, now, understand why a frontend framework is very useful. Frontend frameworks handle state for you. They prevent repeating yourself.
+And I also realized, security in web applications is very hard to do right. (especially in realtime apps)
+
+I am going to try my chance again, with more powerful tools and with more experience later. Right now, I don't think I can produce a production-ready, somewhat secure, realtime application.
+
+I am going to focus on other projects now. 
+
+*emotional music starts playing* see you...
